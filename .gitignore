@@ -1,0 +1,24 @@
+# Claude Code
+.claude/
+CLAUDE.md
+
+# Angular
+dist/
+.angular/
+node_modules/
+.env
+.env.*
+*.env
+
+# VS Code
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
