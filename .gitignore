@@ -9,6 +9,7 @@ node_modules/
 .env
 .env.*
 *.env
+*environment.ts
 
 # VS Code
 .vscode/*
