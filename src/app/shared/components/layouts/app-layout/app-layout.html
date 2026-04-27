@@ -1,0 +1,21 @@
+<div class="min-h-screen bg-gray-50 flex flex-col">
+  <header class="bg-white border-b border-gray-200 shadow-sm">
+    <div class="max-w-5xl mx-auto px-8 h-16 flex items-center justify-between gap-6">
+      <div class="flex items-center gap-3 shrink-0">
+        <img src="/logo.svg" alt="Tricount" class="w-8 h-8" />
+      </div>
+
+      <h1 class="flex-1 text-lg font-semibold text-gray-900">{{ layoutService.pageTitle() }}</h1>
+
+      <button
+        class="shrink-0 py-2 px-4 rounded-lg border border-gray-200 hover:bg-gray-50 text-sm text-gray-600 font-medium transition"
+      >
+        Déconnexion
+      </button>
+    </div>
+  </header>
+
+  <main class="flex-1">
+    <router-outlet />
+  </main>
+</div>

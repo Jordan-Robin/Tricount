@@ -1,66 +1,64 @@
-<div class="min-h-screen bg-gray-50 flex items-center justify-center">
-  <div class="w-full max-w-md bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
-    <h1 class="text-2xl font-semibold text-gray-900 mb-6">Créer un compte</h1>
+<div class="w-full lg:w-1/4 mx-auto bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+  <h1 class="text-2xl font-semibold text-gray-900 mb-6 text-center">{{ layoutService.pageTitle() }}</h1>
 
-    @if (errorMessage()) {
-      <div class="mb-4 px-4 py-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm">
-        {{ errorMessage() }}
-      </div>
-    }
+  @if (errorMessage()) {
+    <div class="mb-4 px-4 py-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm">
+      {{ errorMessage() }}
+    </div>
+  }
 
-    <form [formGroup]="form" (ngSubmit)="submit()" class="flex flex-col gap-4">
-      <div class="flex flex-col gap-1">
-        <label for="email" class="text-sm font-medium text-gray-700">Email</label>
-        <input
-          id="email"
-          type="email"
-          formControlName="email"
-          placeholder="vous@exemple.com"
-          class="px-3 py-2 rounded-lg border border-gray-300 text-sm outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
-        />
-        @if (form.controls.email.touched && form.controls.email.errors) {
-          @if (form.controls.email.errors['required']) {
-            <span class="text-red-500 text-xs">L'email est requis</span>
-          } @else if (form.controls.email.errors['email']) {
-            <span class="text-red-500 text-xs">Email invalide</span>
-          }
+  <form [formGroup]="form" (ngSubmit)="submit()" class="flex flex-col gap-4">
+    <div class="flex flex-col gap-1">
+      <label for="email" class="text-sm font-medium text-gray-700">Email</label>
+      <input
+        id="email"
+        type="email"
+        formControlName="email"
+        placeholder="vous@exemple.com"
+        class="px-3 py-2 rounded-lg border border-gray-300 text-sm outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+      />
+      @if (form.controls.email.touched && form.controls.email.errors) {
+        @if (form.controls.email.errors['required']) {
+          <span class="text-red-500 text-xs">L'email est requis</span>
+        } @else if (form.controls.email.errors['email']) {
+          <span class="text-red-500 text-xs">Email invalide</span>
         }
-      </div>
+      }
+    </div>
 
-      <div class="flex flex-col gap-1">
-        <label for="password" class="text-sm font-medium text-gray-700">Mot de passe</label>
-        <input
-          id="password"
-          type="password"
-          formControlName="password"
-          placeholder="••••••••"
-          class="px-3 py-2 rounded-lg border border-gray-300 text-sm outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
-        />
-        @if (form.controls.password.touched && form.controls.password.errors) {
-          @if (form.controls.password.errors['required']) {
-            <span class="text-red-500 text-xs">Le mot de passe est requis</span>
-          } @else if (form.controls.password.errors['minlength']) {
-            <span class="text-red-500 text-xs">Mot de passe invalide</span>
-          }
+    <div class="flex flex-col gap-1">
+      <label for="password" class="text-sm font-medium text-gray-700">Mot de passe</label>
+      <input
+        id="password"
+        type="password"
+        formControlName="password"
+        placeholder="••••••••"
+        class="px-3 py-2 rounded-lg border border-gray-300 text-sm outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+      />
+      @if (form.controls.password.touched && form.controls.password.errors) {
+        @if (form.controls.password.errors['required']) {
+          <span class="text-red-500 text-xs">Le mot de passe est requis</span>
+        } @else if (form.controls.password.errors['minlength']) {
+          <span class="text-red-500 text-xs">Mot de passe invalide</span>
         }
-      </div>
+      }
+    </div>
 
-      <button
-        type="submit"
-        [disabled]="loading()"
-        class="mt-2 py-2 px-4 rounded-lg bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-medium transition"
-      >
-        @if (loading()) {
-          Inscription…
-        } @else {
-          Créer mon compte
-        }
-      </button>
-    </form>
+    <button
+      type="submit"
+      [disabled]="loading()"
+      class="mt-2 py-2 px-4 rounded-lg bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-medium transition"
+    >
+      @if (loading()) {
+        Inscription…
+      } @else {
+        Créer mon compte
+      }
+    </button>
+  </form>
 
-    <p class="mt-6 text-center text-sm text-gray-500">
-      Déjà un compte ?
-      <a routerLink="/login" class="text-indigo-600 hover:underline font-medium">Se connecter</a>
-    </p>
-  </div>
+  <p class="mt-6 text-center text-sm text-gray-500">
+    Déjà un compte ?
+    <a routerLink="/login" class="text-indigo-600 hover:underline font-medium">Se connecter</a>
+  </p>
 </div>

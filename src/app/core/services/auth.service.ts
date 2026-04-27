@@ -7,7 +7,7 @@ import { AuthCredentials, SignInResponse, SignUpResponse } from '@shared/models/
   providedIn: 'root',
 })
 export class AuthService {
-  private supabaseService = inject(SupabaseService);
+  private supabase = inject(SupabaseService);
 
   /**
    * Vérifie si l'utilisateur est connecté.
@@ -15,7 +15,7 @@ export class AuthService {
    * @returns true si connecté, false si non connecté.
    */
   async isLoggedIn(): Promise<boolean> {
-    const session: Session | null = await this.supabaseService.getSession();
+    const session: Session | null = await this.supabase.getSession();
     return Boolean(session);
   }
 
@@ -24,10 +24,10 @@ export class AuthService {
    *
    * @param credentials E-mail et mot de passe.
    *
-   * @returns L'utilisateur créé au format Supabase ou une erreur en cas d'échec.
+   * @returns L'utilisateur créé ou une erreur en cas d'échec.
    */
   async signUp(credentials: AuthCredentials): Promise<SignUpResponse> {
-    const { data, error } = await this.supabaseService.signUp(credentials);
+    const { data, error } = await this.supabase.signUp(credentials);
 
     // Cas 1 : la création du compte a échoué
     if (error) {
@@ -48,7 +48,8 @@ export class AuthService {
           errorMessage = "Les inscriptions sont désactivées. Contactez l'administrateur.";
           break;
         default:
-          errorMessage = error.message;
+          errorMessage =
+            'Une erreur est survenue, merci de rééssayer ou contactez votre administrateur.';
       }
 
       return { user: null, error: errorMessage };
@@ -63,10 +64,10 @@ export class AuthService {
    *
    * @param credentials E-mail et mot de passe.
    *
-   * @returns L'utilisateur et la session au format Supabase, ou une erreur en cas d'échec.
+   * @returns L'utilisateur et la session, ou une erreur en cas d'échec.
    */
   async signIn(credentials: AuthCredentials): Promise<SignInResponse> {
-    const { data, error } = await this.supabaseService.signIn(credentials);
+    const { data, error } = await this.supabase.signIn(credentials);
 
     // Cas 1 : la connexion a échoué
     if (error) {
@@ -83,7 +84,8 @@ export class AuthService {
           errorMessage = 'Connexion impossible : compte banni.';
           break;
         default:
-          errorMessage = error.message;
+          errorMessage =
+            'Une erreur est survenue, merci de rééssayer ou contactez votre administrateur.';
       }
 
       return { user: null, session: null, error: errorMessage };
