@@ -1,0 +1,60 @@
+<div class="max-w-5xl mx-auto px-8 py-8">
+
+  @for (error of errorMessages(); track error) {
+    <div class="mb-4 px-4 py-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm">
+      {{ error }}
+    </div>
+  }
+
+  @if (isLoading()) {
+    <div class="flex items-center gap-3 text-gray-500 text-sm">
+      <svg class="animate-spin w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+      </svg>
+      Chargement…
+    </div>
+  } @else {
+
+    <section>
+      <h2 class="text-lg font-semibold text-gray-900 mb-4">Mes informations</h2>
+      @if (profile()) {
+        <div class="flex flex-col gap-2 text-sm text-gray-700">
+          <p><span class="font-medium text-gray-500 w-20 inline-block">Prénom</span>{{ profile()?.first_name ?? '—' }}</p>
+          <p><span class="font-medium text-gray-500 w-20 inline-block">Nom</span>{{ profile()?.last_name ?? '—' }}</p>
+        </div>
+      }
+    </section>
+
+    <hr class="my-8 mx-4 border-gray-200" />
+
+    <section>
+      <h2 class="text-lg font-semibold text-gray-900 mb-4">Mes invitations en attente</h2>
+
+      @if (projectsList().length === 0) {
+        <p class="text-sm text-gray-500">Aucune invitation en attente.</p>
+      } @else {
+        <div class="flex flex-col gap-3">
+          @for (project of projectsList(); track project.id) {
+            <div class="flex items-center justify-between gap-6 bg-white rounded-xl border border-gray-200 shadow-sm px-6 py-4">
+              <div class="flex flex-col gap-1 min-w-0">
+                <span class="font-medium text-gray-900 truncate">{{ project.name }}</span>
+                @if (project.description) {
+                  <span class="text-sm text-gray-500 truncate">{{ project.description }}</span>
+                }
+              </div>
+              <button
+                type="button"
+                class="shrink-0 py-2 px-4 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium transition active:scale-95 active:opacity-80"
+              >
+                Accepter
+              </button>
+            </div>
+          }
+        </div>
+      }
+    </section>
+
+  }
+
+</div>

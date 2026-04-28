@@ -120,7 +120,7 @@ export type Database = {
       project_participants: {
         Row: {
           id: string
-          invited_at: string
+          joined_at: string
           project_id: string
           pseudo: string
           status: Database["public"]["Enums"]["invitation_status"]
@@ -128,7 +128,7 @@ export type Database = {
         }
         Insert: {
           id?: string
-          invited_at?: string
+          joined_at?: string
           project_id: string
           pseudo: string
           status?: Database["public"]["Enums"]["invitation_status"]
@@ -136,7 +136,7 @@ export type Database = {
         }
         Update: {
           id?: string
-          invited_at?: string
+          joined_at?: string
           project_id?: string
           pseudo?: string
           status?: Database["public"]["Enums"]["invitation_status"]
@@ -226,6 +226,7 @@ export type Database = {
         Args: { p_description: string; p_name: string; p_pseudo: string }
         Returns: string
       }
+      is_project_member: { Args: { p_project_id: string }; Returns: boolean }
     }
     Enums: {
       invitation_status: "pending" | "accepted"

@@ -23,6 +23,7 @@ export class Login {
   });
   protected errorMessage = signal<string | null>(null);
   protected loading = signal(false);
+  protected readonly PATHS = PATHS;
 
   constructor() {
     this.layoutService.pageTitle.set('Connexion');

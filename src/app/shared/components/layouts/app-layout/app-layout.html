@@ -2,16 +2,28 @@
   <header class="bg-white border-b border-gray-200 shadow-sm">
     <div class="max-w-5xl mx-auto px-8 h-16 flex items-center justify-between gap-6">
       <div class="flex items-center gap-3 shrink-0">
-        <img src="/logo.svg" alt="Tricount" class="w-8 h-8" />
+        <a [routerLink]="'/' + PATHS.PROJECTS"
+          ><img src="/logo.svg" alt="Tricount" class="w-8 h-8"
+        /></a>
       </div>
 
       <h1 class="flex-1 text-lg font-semibold text-gray-900">{{ layoutService.pageTitle() }}</h1>
 
-      <button
-        class="shrink-0 py-2 px-4 rounded-lg border border-gray-200 hover:bg-gray-50 text-sm text-gray-600 font-medium transition"
-      >
-        Déconnexion
-      </button>
+      <div class="flex items-center gap-2 shrink-0">
+        <button
+          type="button"
+          [routerLink]="'/' + PATHS.PROFILE"
+          class="py-2 px-4 rounded-lg border border-gray-200 hover:bg-gray-50 text-sm text-gray-600 font-medium transition"
+        >
+          Mon Profil
+        </button>
+        <button
+          class="py-2 px-4 rounded-lg border border-gray-200 hover:bg-gray-50 text-sm text-gray-600 font-medium transition"
+          (click)="signOut()"
+        >
+          Déconnexion
+        </button>
+      </div>
     </div>
   </header>
 

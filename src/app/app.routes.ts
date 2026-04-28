@@ -14,6 +14,13 @@ export const routes: Routes = [
         loadComponent: () =>
           import('@features/projects/project-list/project-list').then((m) => m.ProjectList),
       },
+      {
+        path: PATHS.PROFILE,
+        loadComponent: () =>
+          import('@features/profiles/display-profile/display-profile').then(
+            (m) => m.DisplayProfile,
+          ),
+      },
     ],
   },
   {

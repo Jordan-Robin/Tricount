@@ -1,5 +1,7 @@
 <div class="w-full lg:w-1/4 mx-auto bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
-  <h1 class="text-2xl font-semibold text-gray-900 mb-6 text-center">{{ layoutService.pageTitle() }}</h1>
+  <h1 class="text-2xl font-semibold text-gray-900 mb-6 text-center">
+    {{ layoutService.pageTitle() }}
+  </h1>
 
   @if (errorMessage()) {
     <div class="mb-4 px-4 py-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm">
@@ -59,6 +61,8 @@
 
   <p class="mt-6 text-center text-sm text-gray-500">
     Déjà un compte ?
-    <a routerLink="/login" class="text-indigo-600 hover:underline font-medium">Se connecter</a>
+    <a [routerLink]="'/' + PATHS.LOGIN" class="text-indigo-600 hover:underline font-medium"
+      >Se connecter</a
+    >
   </p>
 </div>

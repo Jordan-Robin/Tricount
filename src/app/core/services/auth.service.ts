@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 import { Session, User } from '@supabase/supabase-js';
 import { AuthCredentials, SignInResponse, SignUpResponse } from '@shared/models/auth.models';
+import { ServiceResponse } from '@shared/models/service.models';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +18,20 @@ export class AuthService {
   async isLoggedIn(): Promise<boolean> {
     const session: Session | null = await this.supabase.getSession();
     return Boolean(session);
+  }
+
+  /**
+   * Récupère l'utilisateur connecté du schéma auth de Supabase.
+   *
+   * @returns L'utilisateur créé ou une erreur en cas d'échec.
+   */
+  async getUser(): Promise<ServiceResponse<User>> {
+    const response: User | null = await this.supabase.getUser();
+    if (response) return { data: response, error: null };
+    return {
+      data: null,
+      error: 'Erreur, merci de vous reconnectez, ou contactez votre administrateur.',
+    };
   }
 
   /**
@@ -93,5 +108,12 @@ export class AuthService {
 
     // Cas 2 : succès et retour d'un User et de la Session.
     return { user: data.user, session: data.session, error: null };
+  }
+
+  /**
+   * Déconnecte l'utilisateur.
+   */
+  async signOut(): Promise<void> {
+    await this.supabase.signOut();
   }
 }

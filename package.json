@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "database-type": "npx supabase gen types typescript --project-id rzyfbqgrsrhfysqtisfo --schema public > src/types/database.types.ts"
   },
   "private": true,
   "packageManager": "npm@11.6.2",
