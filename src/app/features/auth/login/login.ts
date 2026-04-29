@@ -43,7 +43,13 @@ export class Login {
       const { error } = await this.authService.signIn(formData);
 
       if (error) this.errorMessage.set(error);
-      else this.router.navigate([PATHS.PROJECTS]);
+      else {
+        this.layoutService.setNotification({
+          message: 'Vous êtes connecté.',
+          type: 'success',
+        });
+        this.router.navigate([PATHS.PROJECTS]);
+      }
     } catch (error) {
       this.errorMessage.set(
         'Une erreur est survenue, merci de rééssayer, ou contactez votre administrateur.',

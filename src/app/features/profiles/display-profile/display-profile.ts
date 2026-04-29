@@ -35,7 +35,11 @@ export class DisplayProfile implements OnInit {
       const { data: projectsData, error: projectsError } =
         await this.projectService.getPendingUserProjects();
       if (projectsData) this.projectsList.set(projectsData);
-      else this.errorMessages.update((errors) => [...errors, projectsError]);
+      else
+        this.errorMessages.update((errors) => [
+          ...errors,
+          'Récupération de vos projets en attente : ' + projectsError!,
+        ]);
     } finally {
       this.isLoading.set(false);
     }

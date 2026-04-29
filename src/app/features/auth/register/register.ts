@@ -43,7 +43,13 @@ export class Register {
       const { error } = await this.authService.signUp(formData);
 
       if (error) this.errorMessage.set(error);
-      else this.router.navigate([PATHS.LOGIN]);
+      else {
+        this.layoutService.setNotification({
+          message: 'Compte créé avec succès.',
+          type: 'success',
+        });
+        this.router.navigate([PATHS.LOGIN]);
+      }
     } catch {
       this.errorMessage.set(
         'Une erreur est survenue, merci de rééssayer, ou contactez votre administrateur.',

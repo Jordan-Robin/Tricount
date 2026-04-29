@@ -1,12 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { LayoutService } from '@core/services/layout.service';
+import { Notification } from '@shared/components/notification/notification';
 
 @Component({
   selector: 'app-auth-layout',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, Notification],
   templateUrl: './auth-layout.html',
 })
-export class AuthLayout {
-  protected layoutService = inject(LayoutService);
-}
+export class AuthLayout {}
