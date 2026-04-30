@@ -223,8 +223,17 @@ export type Database = {
     }
     Functions: {
       add_project: {
-        Args: { p_description: string; p_name: string; p_pseudo: string }
+        Args: {
+          p_description?: string
+          p_name: string
+          p_participants: string[]
+          p_pseudo: string
+        }
         Returns: string
+      }
+      add_project_participants: {
+        Args: { p_participants: string[]; p_project_id: string }
+        Returns: undefined
       }
       is_project_member: { Args: { p_project_id: string }; Returns: boolean }
     }

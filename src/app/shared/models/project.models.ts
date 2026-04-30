@@ -8,3 +8,10 @@ export const INVITATION_STATUS = {
   PENDING: 'pending',
   ACCEPTED: 'accepted',
 } as const;
+
+export type ProjectCreation = {
+  name: string;
+  description: string | null;
+  creatorPseudo: string;
+  participantsEmail: string[];
+};

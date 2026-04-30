@@ -4,15 +4,25 @@ import { authGuard } from '@core/guards/auth.guard';
 
 export const routes: Routes = [
   {
-    path: PATHS.HOME,
+    path: '',
     canActivate: [authGuard],
     loadComponent: () =>
       import('@shared/components/layouts/app-layout/app-layout').then((m) => m.AppLayout),
     children: [
       {
         path: PATHS.PROJECTS,
-        loadComponent: () =>
-          import('@features/projects/project-list/project-list').then((m) => m.ProjectList),
+        children: [
+          {
+            path: '',
+            loadComponent: () =>
+              import('@features/projects/project-list/project-list').then((m) => m.ProjectList),
+          },
+          {
+            path: PATHS.NEW,
+            loadComponent: () =>
+              import('@features/projects/add-project/add-project').then((m) => m.AddProject),
+          },
+        ],
       },
       {
         path: PATHS.PROFILE,
@@ -24,7 +34,7 @@ export const routes: Routes = [
     ],
   },
   {
-    path: PATHS.HOME,
+    path: '',
     loadComponent: () =>
       import('@shared/components/layouts/auth-layout/auth-layout').then((m) => m.AuthLayout),
     children: [
@@ -39,7 +49,7 @@ export const routes: Routes = [
     ],
   },
   {
-    path: PATHS.HOME,
+    path: '',
     redirectTo: PATHS.LOGIN,
     pathMatch: 'full',
   },

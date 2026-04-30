@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router';
 import { LayoutService } from '@core/services/layout.service';
 import { ProjectService } from '@core/services/project.service';
 import { Project } from '@shared/models/project.models';
+import { PATHS } from 'src/app/routes.constants';
 
 @Component({
   selector: 'app-project-list',
@@ -16,6 +17,7 @@ export class ProjectList implements OnInit {
   protected projectList = signal<Project[]>([]);
   protected errorMessage = signal<string | null>(null);
   protected isLoading = signal(false);
+  protected readonly PATHS = PATHS;
 
   async ngOnInit() {
     this.layoutService.pageTitle.set('Mes Tricounts');

@@ -1,0 +1,138 @@
+<div class="max-w-5xl mx-auto px-8 py-8">
+  @if (errorMessages()) {
+    <div class="mb-4 px-4 py-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm">
+      {{ errorMessages() }}
+    </div>
+  }
+
+  <form
+    [formGroup]="form"
+    (ngSubmit)="submit()"
+    class="bg-white rounded-xl border border-gray-200 shadow-sm px-8 py-8 max-w-xl mx-auto flex flex-col gap-6"
+  >
+    <div class="flex flex-col gap-1.5">
+      <label for="name" class="text-sm font-medium text-gray-700">
+        Nom du projet <span class="text-red-500">*</span>
+      </label>
+      <input
+        formControlName="name"
+        id="name"
+        type="text"
+        placeholder="Ex : Vacances été 2025"
+        class="px-3 py-2 rounded-lg border border-gray-300 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+      />
+      @if (form.controls.name.touched && form.controls.name.errors) {
+        @if (form.controls.name.errors['required']) {
+          <span class="text-xs text-red-600">Le nom est requis</span>
+        }
+      }
+    </div>
+
+    <div class="flex flex-col gap-1.5">
+      <label for="description" class="text-sm font-medium text-gray-700">Description</label>
+      <textarea
+        id="description"
+        formControlName="description"
+        rows="3"
+        placeholder="Une courte description (facultatif)"
+        class="px-3 py-2 rounded-lg border border-gray-300 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition resize-none"
+      ></textarea>
+    </div>
+
+    <div class="flex flex-col gap-1.5">
+      <label for="creatorPseudo" class="text-sm font-medium text-gray-700">
+        Votre pseudo <span class="text-red-500">*</span>
+      </label>
+      <input
+        formControlName="creatorPseudo"
+        id="creatorPseudo"
+        type="text"
+        placeholder="Ex : Jordan"
+        class="px-3 py-2 rounded-lg border border-gray-300 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+      />
+      <span class="text-xs text-gray-500">Votre nom tel qu'il apparaîtra aux autres membres</span>
+      @if (form.controls.creatorPseudo.touched && form.controls.creatorPseudo.errors) {
+        @if (form.controls.creatorPseudo.errors['required']) {
+          <span class="text-xs text-red-600">Le pseudo est requis</span>
+        }
+      }
+    </div>
+
+    <div class="flex flex-col gap-3">
+      <label class="text-sm font-medium text-gray-700"
+        >Participants
+        <span class="text-xs text-gray-500">(Vous serez déjà automatiquement ajouté)</span></label
+      >
+
+      <div formArrayName="participantsEmail" class="flex flex-col gap-2">
+        @for (control of participantsEmail.controls; track $index) {
+          <div class="flex flex-col gap-1">
+            <div class="flex items-center gap-2">
+              <input
+                [formControlName]="$index"
+                type="email"
+                placeholder="adresse@email.com"
+                class="flex-1 px-3 py-2 rounded-lg border border-gray-300 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+              />
+              <button
+                type="button"
+                (click)="removeParticipant($index)"
+                class="p-2 rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50 transition"
+                title="Supprimer"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-4 h-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            @if (control.touched && control.errors) {
+              @if (control.errors['required']) {
+                <span class="text-xs text-red-600">Adresse email obligatoire</span>
+              }
+              @if (control.errors['email']) {
+                <span class="text-xs text-red-600">Adresse email invalide</span>
+              }
+            }
+          </div>
+        }
+      </div>
+
+      <button
+        type="button"
+        (click)="addParticipant()"
+        class="self-start flex items-center gap-1.5 text-sm text-indigo-600 hover:text-indigo-800 font-medium transition"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-4 h-4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+        </svg>
+        Ajouter un participant
+      </button>
+    </div>
+
+    <div class="flex items-center justify-between pt-2">
+      <span class="text-xs text-gray-400"
+        ><span class="text-red-500">*</span> Champs obligatoires</span
+      >
+      <button
+        type="submit"
+        class="py-2 px-5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium transition active:scale-95 active:opacity-80"
+      >
+        Créer le projet
+      </button>
+    </div>
+  </form>
+</div>

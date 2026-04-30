@@ -8,7 +8,7 @@ export class LayoutService {
   /** Titre affiché dans le header, mis à jour par chaque composant de page. */
   public pageTitle = signal<string>('');
 
-  public _notification = signal<Notification | null>(null);
+  private _notification = signal<Notification | null>(null);
 
   /** Notification éventuelle suite à une action et redirection. */
   public readonly notification = this._notification.asReadonly();
