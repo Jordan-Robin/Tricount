@@ -2,14 +2,13 @@ import { inject, Injectable } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 import { ServiceResponse } from '@shared/models/service.models';
 import { Project, INVITATION_STATUS, ProjectCreation } from '@shared/models/project.models';
-import { AuthService } from './auth.service';
+import { Session } from '@supabase/supabase-js';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProjectService {
   private supabase = inject(SupabaseService);
-  private authService = inject(AuthService);
 
   /**
    * Récupère tous les projets dont l'utilisateur connecté participe.
@@ -18,10 +17,21 @@ export class ProjectService {
    */
   async getAll(): Promise<ServiceResponse<Project[]>> {
     try {
-      const { data, error } = await this.supabase.client().from('projects').select();
+      const session: Session | null = await this.supabase.getSession();
+      if (!session)
+        return {
+          data: null,
+          error: 'Il semble que vous ne soyez pas connectés.',
+        };
 
-      if (error) return { data: null, error: this.supabase.mapPostgrestError(error) };
-      return { data: data, error: null };
+      const { data, error } = await this.supabase
+        .client()
+        .from('projects')
+        .select('*, project_participants!inner()')
+        .eq('project_participants.user_id', session.user.id)
+        .eq('project_participants.status', INVITATION_STATUS.ACCEPTED);
+      if (data) return { data: data, error: null };
+      return { data: null, error: this.supabase.mapPostgrestError(error) };
     } catch {
       return {
         data: null,
@@ -37,18 +47,21 @@ export class ProjectService {
    */
   async getPendingUserProjects(): Promise<ServiceResponse<Project[]>> {
     try {
-      const { data, error } = await this.authService.getUser();
-      if (!data) return { data: null, error: error as string };
+      const session: Session | null = await this.supabase.getSession();
+      if (!session)
+        return {
+          data: null,
+          error: 'Il semble que vous ne soyez pas connectés.',
+        };
 
-      const userId: string = data.id;
-      const { data: projectsList, error: projectError } = await this.supabase
+      const { data, error } = await this.supabase
         .client()
         .from('projects')
         .select('*, project_participants!inner()')
-        .eq('project_participants.user_id', userId)
+        .eq('project_participants.user_id', session.user.id)
         .eq('project_participants.status', INVITATION_STATUS.PENDING);
-      if (projectsList) return { data: projectsList, error: null };
-      return { data: null, error: this.supabase.mapPostgrestError(projectError) };
+      if (data) return { data: data, error: null };
+      return { data: null, error: this.supabase.mapPostgrestError(error) };
     } catch {
       return {
         data: null,
@@ -79,6 +92,33 @@ export class ProjectService {
         data: null,
         error: 'Une erreur est survenue, merci de réessayer ou contactez votre administrateur.',
       };
+    }
+  }
+
+  /**
+   * Passe le statut du participant à un projet en 'accepted'.
+   *
+   * @param projectId UUID du projet.
+   *
+   * @returns Null, ou une erreur en cas d'échec.
+   */
+  async acceptProject(projectId: string): Promise<string | null> {
+    try {
+      const session: Session | null = await this.supabase.getSession();
+      if (!session) return 'Il semble que vous ne soyez pas connectés.';
+
+      const { error } = await this.supabase
+        .client()
+        .from('project_participants')
+        .update({ status: INVITATION_STATUS.ACCEPTED })
+        .eq('user_id', session.user.id)
+        .eq('project_id', projectId);
+      if (error)
+        return 'Une erreur est survenue, merci de réessayer ou contactez votre administrateur.';
+
+      return null;
+    } catch {
+      return 'Une erreur est survenue, merci de réessayer ou contactez votre administrateur.';
     }
   }
 }

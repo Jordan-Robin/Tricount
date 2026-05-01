@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 import { Session, User } from '@supabase/supabase-js';
 import { AuthCredentials, SignInResponse, SignUpResponse } from '@shared/models/auth.models';

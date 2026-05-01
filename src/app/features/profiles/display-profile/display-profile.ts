@@ -44,4 +44,22 @@ export class DisplayProfile implements OnInit {
       this.isLoading.set(false);
     }
   }
+
+  async acceptProject(projectId: string) {
+    this.isLoading.set(true);
+
+    try {
+      const error = await this.projectService.acceptProject(projectId);
+
+      if (error) {
+        this.layoutService.setNotification({ message: error, type: 'error' });
+        return;
+      }
+
+      this.layoutService.setNotification({ message: 'Projet accepté !', type: 'success' });
+      this.projectsList.update((projects) => projects.filter((project) => project.id != projectId));
+    } finally {
+      this.isLoading.set(false);
+    }
+  }
 }

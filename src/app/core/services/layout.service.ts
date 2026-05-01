@@ -10,7 +10,7 @@ export class LayoutService {
 
   private _notification = signal<Notification | null>(null);
 
-  /** Notification éventuelle suite à une action et redirection. */
+  /** Notification éventuelle suite à une action (succès ou résussite). */
   public readonly notification = this._notification.asReadonly();
 
   /**
