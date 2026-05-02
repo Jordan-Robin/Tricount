@@ -1,0 +1,15 @@
+<svg width="160" height="160" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="80" cy="83" r="60" fill="#D8D8D8"/>
+  <circle cx="80" cy="80" r="60" fill="white"/>
+  <!-- Slice coral -->
+  <path d="M 80 80 L 80 26 A 54 54 0 0 1 126.76 107 Z" fill="#FF6B6B"/>
+  <!-- Slice teal -->
+  <path d="M 80 80 L 126.76 107 A 54 54 0 0 1 33.24 107 Z" fill="#4ECDC4"/>
+  <!-- Slice jaune -->
+  <path d="M 80 80 L 33.24 107 A 54 54 0 0 1 80 26 Z" fill="#FFD93D"/>
+  <!-- Séparateurs blancs -->
+  <line x1="80" y1="80" x2="80" y2="26" stroke="white" stroke-width="5" stroke-linecap="round"/>
+  <line x1="80" y1="80" x2="126.76" y2="107" stroke="white" stroke-width="5" stroke-linecap="round"/>
+  <line x1="80" y1="80" x2="33.24" y2="107" stroke="white" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="80" cy="80" r="11" fill="white"/>
+</svg>

@@ -20,7 +20,8 @@
       "@shared/*": ["src/app/shared/*"],
       "@features/*": ["src/app/features/*"]
     },
-    "baseUrl": "."
+    "baseUrl": ".",
+    "ignoreDeprecations": "5.0"
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

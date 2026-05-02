@@ -4,6 +4,7 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthCredentials } from '@shared/models/auth.models';
 import { AuthService } from '@core/services/auth.service';
 import { PATHS } from 'src/app/routes.constants';
+import { LayoutService } from '@core/services/layout.service';
 
 @Component({
   selector: 'app-register',
@@ -14,6 +15,7 @@ export class Register {
   private fb = inject(NonNullableFormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
+  protected layoutService = inject(LayoutService);
 
   protected form = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
@@ -21,6 +23,11 @@ export class Register {
   });
   protected errorMessage = signal<string | null>(null);
   protected loading = signal(false);
+  protected readonly PATHS = PATHS;
+
+  constructor() {
+    this.layoutService.pageTitle.set("S'inscrire");
+  }
 
   async submit() {
     try {
@@ -36,7 +43,13 @@ export class Register {
       const { error } = await this.authService.signUp(formData);
 
       if (error) this.errorMessage.set(error);
-      else this.router.navigate([PATHS.LOGIN]);
+      else {
+        this.layoutService.setNotification({
+          message: 'Compte créé avec succès.',
+          type: 'success',
+        });
+        this.router.navigate([PATHS.LOGIN]);
+      }
     } catch {
       this.errorMessage.set(
         'Une erreur est survenue, merci de rééssayer, ou contactez votre administrateur.',
