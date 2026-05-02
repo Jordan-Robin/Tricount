@@ -22,6 +22,13 @@ export const routes: Routes = [
             loadComponent: () =>
               import('@features/projects/add-project/add-project').then((m) => m.AddProject),
           },
+          {
+            path: ':id',
+            loadComponent: () =>
+              import('@features/projects/display-project/display-project').then(
+                (m) => m.DisplayProject,
+              ),
+          },
         ],
       },
       {

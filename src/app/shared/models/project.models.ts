@@ -1,6 +1,9 @@
 import { Enums, Tables } from 'src/types/database.types';
+import { Expense } from './expense.models';
 
 export type Project = Tables<'projects'>;
+
+export type ProjectParticipant = Tables<'project_participants'>;
 
 export type InvitationStatus = Enums<'invitation_status'>;
 
@@ -14,4 +17,9 @@ export type ProjectCreation = {
   description: string | null;
   creatorPseudo: string;
   participantsEmail: string[];
+};
+
+export type ProjectDetail = Project & {
+  participants: ProjectParticipant[];
+  expenses: Expense[];
 };

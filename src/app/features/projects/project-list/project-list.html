@@ -22,14 +22,15 @@
     } @else {
       <div class="flex flex-col gap-4">
         @for (project of projectList(); track project.id) {
-          <div
-            class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition cursor-pointer"
+          <a
+            [routerLink]="['/', PATHS.PROJECTS, project.id]"
+            class="block bg-white rounded-2xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition"
           >
             <h2 class="text-lg font-semibold text-gray-900">{{ project.name }}</h2>
             @if (project.description) {
               <p class="mt-1 text-sm text-gray-500">{{ project.description }}</p>
             }
-          </div>
+          </a>
         }
       </div>
     }
