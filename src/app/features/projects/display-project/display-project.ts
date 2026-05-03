@@ -4,6 +4,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { LayoutService } from '@core/services/layout.service';
 import { ProjectService } from '@core/services/project.service';
 import { ProjectDetail } from '@shared/models/project.models';
+import { PATHS } from 'src/app/routes.constants';
 
 @Component({
   selector: 'app-display-project',
@@ -18,6 +19,7 @@ export class DisplayProject implements OnInit {
   protected project: ProjectDetail | null = null;
   protected isLoading = signal(false);
   protected showExpenses = signal(false);
+  protected readonly PATHS = PATHS;
 
   async ngOnInit() {
     this.isLoading.set(true);

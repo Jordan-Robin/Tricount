@@ -4,4 +4,5 @@ export const PATHS = {
   PROJECTS: 'projects',
   PROFILE: 'profile',
   NEW: 'new',
+  NEW_EXPENSE: 'new-expense',
 };

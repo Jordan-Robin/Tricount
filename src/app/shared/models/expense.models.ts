@@ -9,3 +9,12 @@ export type ExpenseDetail = Omit<Expense, 'created_by' | 'paid_by'> & {
   created_by: ExpenseParticipant;
   paid_by: ExpenseParticipant;
 };
+
+export type ExpenseCreation = {
+  project_id: string;
+  label: string;
+  amount: number;
+  expense_date: string;
+  paid_by: string;
+  participants: string[];
+};

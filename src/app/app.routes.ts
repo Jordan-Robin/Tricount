@@ -24,10 +24,20 @@ export const routes: Routes = [
           },
           {
             path: ':id',
-            loadComponent: () =>
-              import('@features/projects/display-project/display-project').then(
-                (m) => m.DisplayProject,
-              ),
+            children: [
+              {
+                path: '',
+                loadComponent: () =>
+                  import('@features/projects/display-project/display-project').then(
+                    (m) => m.DisplayProject,
+                  ),
+              },
+              {
+                path: PATHS.NEW_EXPENSE,
+                loadComponent: () =>
+                  import('@features/expenses/add-expense/add-expense').then((m) => m.AddExpense),
+              },
+            ],
           },
         ],
       },
